@@ -1,37 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import UsersList from './UsersList.jsx'
-import Filter from './Filter.jsx'
 
-const App = () => {
-  const [users, setUsers] = useState([
-    {
-      name: 'Tad',
-      age: 18,
-    },
-    {
-      name: 'Anna',
-      age: 45,
-    },
-    {
-      name: 'Tom',
-      age: 16,
-    },
-  ])
+const users = [
+  { id: 1, name: 'Ann', age: 45 },
+  { id: 2, name: 'Tad', age: 18 },
+  { id: 3, name: 'Tom', age: 21 },
+]
 
-  const handleFilter = event => {
-    const inputValue = event.target.value.toLowerCase()
-    const filteredUsers = users.filter(user =>
-      user.name.toLowerCase().includes(inputValue)
-    )
-    setUsers(filteredUsers)
-  }
-
-  return (
-    <div>
-      <Filter handleFilter={handleFilter} count={users.length} />
-      <UsersList users={users} />
-    </div>
-  )
-}
+const App = () => <UsersList users={users} />
 
 export default App

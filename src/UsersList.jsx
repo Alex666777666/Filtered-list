@@ -1,16 +1,43 @@
 import React from 'react'
+import Filter from './Filter.jsx'
+import User from './User.jsx'
 
-const UsersList = ({ users }) => {
-  return (
-    <ul className='users'>
-      {users.map((user, index) => (
-        <li key={index} className='user'>
-          <span className='user__name'>{user.name}</span>
-          <span className='user__age'>{user.age}</span>
-        </li>
-      ))}
-    </ul>
-  )
+class UsersList extends React.Component {
+  state = {
+    value: '',
+  }
+
+  handleChange = e => {
+    this.setState({
+      value: e.target.value,
+    })
+  }
+
+  render() {
+    const { users } = this.props
+
+    const resultList =
+      this.state.value === ''
+        ? users
+        : users.filter(user =>
+            user.name.toLowerCase().includes(this.state.value.toLowerCase())
+          )
+
+    return (
+      <>
+        <Filter
+          filterText={this.state.value}
+          count={resultList.length}
+          onChange={this.handleChange}
+        />
+        <ul className='users'>
+          {resultList.map(user => (
+            <User name={user.name} age={user.age} key={user.id} />
+          ))}
+        </ul>
+      </>
+    )
+  }
 }
 
 export default UsersList
